@@ -1,0 +1,421 @@
+
+.dark {
+  --primary-color: #FFFBEB;
+  --secondary-color: #4e4e4e;
+  --tertiary-color: #000000;
+  --selected: #707070;
+  --correct: #5b992c;
+  --close: #bbac37;
+}
+
+.light {
+  --primary-color: #1d1d1d;
+  --secondary-color: #9b9b9b;
+  --tertiary-color: #ffffff;
+  --selected: #c4c4c4;
+  --correct: #6bbb2d;
+  --close: #e4d03d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--tertiary-color);
+  color: var(--primary-color);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  text-align: center;
+}
+
+.page-wrapper {
+  position: relative;
+  max-width: 1400px;
+  margin: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  position: absolute;
+  width: 100%;
+  border-bottom: 1px solid var(--primary-color);
+}
+
+.menu-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.title {
+  width: 100%;
+  left: 0;
+  position: absolute;
+  text-align: center;
+}
+
+.edge-menu {
+  font-size: 1.25rem;
+  display: flex;
+  width: 4.5rem;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.edge-menu i {
+  padding: .3rem;
+  border-radius: .3rem;
+}
+
+.edge-menu i:hover {
+  background-color: var(--correct);
+  cursor: pointer;
+}
+
+.edge-menu i:active {
+  background-color: var(--correct);
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+.game-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-area {
+  position: relative;
+  display: grid;
+  width: 400px;
+  height: 400px;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 1rem;
+  z-index: 1; /* for mousedown to register in play area, not just on tiles */
+}
+
+.tile {
+  font-size: 3rem;
+  font-weight: 700;
+  background-color: var(--secondary-color);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: scale .1s ease-out;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.tempTile {
+  position: absolute;
+  width: calc((400px - 2rem) / 3);
+  height: calc((400px - 2rem) / 3);
+  left: 0px;
+  top: 0px;
+  /* pulled from .tile */
+  font-size: 3rem;
+  font-weight: 700;
+  background-color: var(--secondary-color);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: scale .1s ease-out;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.tile-animation-wrapper {
+  position: relative;
+}
+
+.selector {
+  background-color: var(--selected);
+  transform: scale(105%);
+  transition: scale .1s ease-out;
+}
+
+.close {
+  background-color: var(--close);
+}
+
+.correct {
+  background-color: var(--correct);
+}
+
+.win-info-popup-wrapper {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.popup {
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /*to center*/
+  color: var(--primary-color); 
+  border-radius: 16px;
+  z-index: 3;
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
+.win {
+  background-color: var(--correct);
+  height: 450px;
+  max-width: 450px;
+  opacity: 0;
+}
+
+.info {
+  background-color: var(--selected);
+  width: 35ch;
+  text-align: start;
+}
+
+.leaderboard {
+  background-color: var(--correct);
+  height: 450px;
+  width: 450px;
+}
+
+ul {
+  margin-top: 1rem;
+  margin-left: 2rem;
+  list-style-position: outside;
+  list-style-type: square;
+}
+
+ul li {
+  padding-bottom: 1rem;
+}
+
+.popup h2 {
+  text-align: center;
+  font-size: 2rem;
+  padding: 1rem;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 100;
+  transition: opacity 1s ease-in-out;
+}
+
+.exit {
+  text-align: right;
+}
+
+.exit i:hover {
+  cursor: pointer;
+}
+
+.share {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+}
+
+/*ANIMATION*/
+
+.slide-up {
+  animation: slide-up 100ms ease-in-out;
+}
+
+.slide-down {
+  animation: slide-down 100ms ease-in-out;
+}
+
+.slide-left {
+  animation: slide-left 100ms ease-in-out;
+}
+
+.slide-right {
+  animation: slide-right 100ms ease-in-out;
+}
+
+.disappear-slide-up {
+  animation:
+    slide-up 100ms ease-in-out, 
+    disappear 100ms ease-in-out;
+}
+
+.disappear-slide-down {
+  animation:
+    slide-down 100ms ease-in-out,
+    disappear 100ms ease-in-out;
+}
+
+.disappear-slide-left {
+  animation:
+    slide-left 100ms ease-in-out,
+    disappear 100ms ease-in-out;
+}
+
+.disappear-slide-right {
+  animation:
+    slide-right 100ms ease-in-out,
+    disappear 100ms ease-in-out;
+}
+
+.reappear-slide-up {
+  animation:
+    slide-up 100ms ease-in-out,
+    reappear 100ms ease-in-out;
+}
+
+.reappear-slide-down {
+  animation:
+    slide-down 100ms ease-in-out,
+    reappear 100ms ease-in-out;
+}
+
+.reappear-slide-left {
+  animation:
+    slide-left 100ms ease-in-out,
+    reappear 100ms ease-in-out;
+}
+
+.reappear-slide-right {
+  animation:
+    slide-right 100ms ease-in-out,
+    reappear 100ms ease-in-out;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(134px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-134px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(134px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(-134px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 100;
+  }
+
+  75% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes reappear {
+  0% {
+    opacity: 0;
+  }
+
+  75% {
+    opacity: 100;
+  }
+
+  100% {
+    opacity: 100;
+  }
+}
+
+
+@media only screen and (max-width: 450px) {
+
+  .popup {
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    overflow-y: scroll;
+  }
+
+  .play-area {
+    width: calc(100vw - 2rem);
+    height: calc(100vw - 2rem);
+  }
+
+  header {
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .title {
+    position: relative;
+    flex: 1 1 100%;
+  }
+
+  .edge-menu {
+    flex: 1 1 50%;
+    justify-content: space-evenly;
+  }
+
+  .menu-wrapper {
+    margin-top: .5rem;
+  }
+
+}
+
+@media only screen and (max-height: 650px) {
+  body {
+    overflow-y: scroll;
+  }
+
+  .game-wrapper {
+    height: 650px;
+  }
+}
